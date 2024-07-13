@@ -1,0 +1,264 @@
+{
+	"info": {
+		"_postman_id": "7329ce6e-6070-45fd-9381-7e68a55cbe01",
+		"name": "aws-sample",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "echo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b56e58f5-9001-4412-bb09-280adad290c6",
+						"exec": [
+							"pm.test(\"Response status is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response contains the Content-Type header of 'application/json'\", function () {",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.contain('application/json');",
+							"});",
+							"",
+							"pm.test(\"JSON body contains a 'message' member with the passed in message\", function () {",
+							"    var jsonData = pm.response.json(),",
+							"        message = pm.variables.get(\"message\");",
+							"        ",
+							"    // Expectation",
+							"    pm.expect(jsonData).to.eql({message: (message||'')});",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{api_base}}{{api_echo}}?message={{message}}",
+					"host": [
+						"{{api_base}}{{api_echo}}"
+					],
+					"query": [
+						{
+							"key": "message",
+							"value": "{{message}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reverse",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "afddeb81-c387-4a1a-95c2-91d4a6ddeb65",
+						"exec": [
+							"pm.test(\"Response status is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response contains the Content-Type header of 'application/json'\", function () {",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.contain('application/json');",
+							"});",
+							"",
+							"pm.test(\"JSON body contains a 'message' member with the passed in message reversed\", function () {",
+							"    var jsonData = pm.response.json(),",
+							"        message = pm.variables.get(\"message\");",
+							"        ",
+							"    // Expectation",
+							"    pm.expect(jsonData).to.eql({message: message.split('').reverse().join('')});",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{api_base}}{{api_reverse}}?message={{message}}",
+					"host": [
+						"{{api_base}}{{api_reverse}}"
+					],
+					"query": [
+						{
+							"key": "message",
+							"value": "{{message}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "reverse",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://swfqbizvq7.execute-api.us-west-2.amazonaws.com/default/reverse?message=${message}",
+							"protocol": "https",
+							"host": [
+								"swfqbizvq7",
+								"execute-api",
+								"us-west-2",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"default",
+								"reverse"
+							],
+							"query": [
+								{
+									"key": "message",
+									"value": "${message}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Fri, 26 Apr 2019 15:36:24 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "24"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "x-amzn-RequestId",
+							"value": "0cbf02ef-6839-11e9-967b-89b34d8a87fb"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "x-amz-apigw-id",
+							"value": "YwLK3HOLPHcFRDw="
+						},
+						{
+							"key": "X-Amzn-Trace-Id",
+							"value": "Root=1-5cc32578-e28f41c860342d6c03c38374;Sampled=0"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"}egassem{$\"\n}"
+				}
+			]
+		},
+		{
+			"name": "uppercase",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ea0ae187-bad8-49e1-b072-b0dd1295dd10",
+						"exec": [
+							"pm.test(\"Response status is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response contains the Content-Type header of 'application/json'\", function () {",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.contain('application/json');",
+							"});",
+							"",
+							"pm.test(\"JSON body contains a 'message' member with the passed in message uppercase\", function () {",
+							"    var jsonData = pm.response.json(),",
+							"        message = pm.variables.get(\"message\");",
+							"        ",
+							"    // Expectation",
+							"    pm.expect(jsonData).to.eql({message: (message||'').toUpperCase()});",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{api_base}}{{api_uppercase}}?message={{message}}",
+					"host": [
+						"{{api_base}}{{api_uppercase}}"
+					],
+					"query": [
+						{
+							"key": "message",
+							"value": "{{message}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "ea609c5f-c556-43a3-8965-d7f333168c2c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "6182a7c1-4287-4c4e-bb20-ce08cd3640c3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "ded2692d-cb35-47ba-a52f-854d031b6c9d",
+			"key": "message",
+			"value": "this is a message",
+			"type": "string"
+		}
+	]
+}

@@ -1,0 +1,9 @@
+build/
+node_modules/
+.DS_Store
+dist/
+cypress/videos/
+cypress/support/
+cypress/plugins/
+cypress/screenshots/
+cypress.env.json

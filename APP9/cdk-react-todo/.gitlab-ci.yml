@@ -1,0 +1,37 @@
+stages:
+  - setup
+  - test
+
+.test:
+  stage: test
+  except:
+    - tags
+    - triggers
+  image: node:10
+
+setup:
+  stage: setup
+  image: node:10
+  script:
+    - npm i
+    - npm run lerna:bootstrap
+  artifacts:
+    paths:
+      - node_modules/
+      - packages/lambdas/node_modules/
+      - packages/app/node_modules/
+
+compile:
+  extends: .test
+  script:
+    - npm run build
+
+lint:
+  extends: .test
+  script:
+    - npm run lint
+
+type-check:
+  extends: .test
+  script:
+    - npm run type-check

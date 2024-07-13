@@ -1,0 +1,9 @@
+{
+    "env": {
+        "baseurl": "http://jghidiu-test.s3-website-us-west-2.amazonaws.com/"
+    },
+    "ignoreTestFiles": ["**/pages/*.js"],
+    "fixturesFolder": false,
+    "pluginsFile": false,
+    "supportFile": false
+}

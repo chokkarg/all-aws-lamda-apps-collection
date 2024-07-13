@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Tests</title>
+        <link rel="stylesheet" href="../../node_modules/mocha/mocha.css">
+    </head>
+
+    <body>
+
+        <!-- // Elements used in the page under test -->
+        <div style="display: none;">
+            <input type="text" id="message"/>
+            <button id="echo"></button>
+            <button id="reverse"></button>
+            <button id="uppercase"></button>
+            <div id="form-response"></div>
+        </div>
+
+
+        <!-- // The testing framework DIV -->
+        <div id="mocha"></div>
+
+
+        <!-- // Testing library scripts -->
+        <script src="../../node_modules/mocha/mocha.js"></script>
+        <script src="../../node_modules/chai/chai.js"></script>
+        <script src="../../node_modules/sinon/pkg/sinon.js"></script>
+
+
+        <!-- // Configure mocha -->
+        <script>mocha.setup('bdd')</script>
+
+
+        <!-- // Required code for the page under test -->
+        <!-- // Pull in jQuery; note that the SAME VERSION is used in the actual page and the test -->
+        <!-- //   The version from the page (which CAN be used here, but that would require a network connection to test) -->
+        <!-- <script src="https://code.jquery.com/jquery-3.4.0.js" integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script> -->
+        <!-- //   The local copy (pinned in package.json to the same page as the actual page) -->
+        <script src="../../node_modules/jquery/dist/jquery.js"></script>
+
+        <!-- // Code for the page under test -->
+        <script src="../../app/html/environment.js"></script>
+        <script src="../../app/html/index.js"></script>
+
+        <!-- // Tests -->
+        <script src="index-spec.js"></script>
+
+
+        <!-- // Run mocha -->
+        <script type="text/javascript">mocha.run();</script>
+
+  </body>
+</html>

@@ -1,0 +1,3 @@
+settings:
+  quotesTableName: "${self:provider.stage}-serverless-quotes-table"
+  environment:  ${self:provider.stage}

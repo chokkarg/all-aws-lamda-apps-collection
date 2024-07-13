@@ -1,0 +1,105 @@
+service: serverless-spring-boot
+configValidationMode: off
+
+custom: ${file(./serverless.vars.yml)}
+
+provider:
+  name: aws
+  runtime: java11
+  region: eu-central-1
+  profile: default
+  stage: ${opt:stage, 'dev'}
+  environment: ${self:custom.settings}
+  timeout: 15
+  memorySize: 2048
+  logRetentionInDays: 7
+  lambdaHashingVersion: 20201221
+  role: LambdaIamRole
+
+package:
+  artifact: build/distributions/serverless-spring-boot-1.0.0.zip
+
+functions:
+  getQuotes:
+    handler: com.serverless.example.StreamLambdaHandler::handleRequest
+    events:
+      - http:
+          path: quotes
+          method: get
+          cors: true
+      - schedule:
+          rate: rate(5 minutes)
+  getQuote:
+    handler: com.serverless.example.StreamLambdaHandler::handleRequest
+    events:
+      - http:
+          path: quote/{id}
+          method: get
+          cors: true
+      - schedule:
+          rate: rate(5 minutes)
+  createQuote:
+    handler: com.serverless.example.StreamLambdaHandler::handleRequest
+    events:
+      - http:
+          path: quote
+          method: post
+          cors: true
+      - schedule:
+          rate: rate(5 minutes)
+  updateQuote:
+    handler: com.serverless.example.StreamLambdaHandler::handleRequest
+    events:
+      - http:
+          path: quote/{id}
+          method: put
+          cors: true
+      - schedule:
+          rate: rate(5 minutes)
+  deleteQuote:
+    handler: com.serverless.example.StreamLambdaHandler::handleRequest
+    events:
+      - http:
+          path: quote/{id}
+          method: delete
+          cors: true
+      - schedule:
+          rate: rate(5 minutes)
+
+resources:
+  Resources:
+    QuotesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.settings.quotesTableName}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+    LambdaIamRole:
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: "${self:provider.stage}-${self:service}-iam-role"
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - lambda.amazonaws.com
+              Action: sts:AssumeRole
+        Policies:
+          - PolicyName: "${self:provider.stage}-${self:service}-iam-policy"
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - "dynamodb:*"
+                    - "cloudwatch:*"
+                    - "logs:*"
+                  Resource:
+                    - "*"

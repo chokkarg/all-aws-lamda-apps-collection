@@ -1,0 +1,22 @@
+{
+  "name": "aws-lamda-gateway-dynamodb",
+  "version": "1.0.0",
+  "description": "- The import file in s3 bucket and deploy that into lamda function which is already confiqured with api gateway. - Use comment to zip a file if you are using mac, dont use inbuil zip.   ` zip -r deploy.zip ./` - File name should be in .mjs format, then only import external files will be accepted.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aruns128/aws-gateway-lamda-dynamodb.git"
+  },
+  "author": "arunkumar.s",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aruns128/aws-gateway-lamda-dynamodb/issues"
+  },
+  "homepage": "https://github.com/aruns128/aws-gateway-lamda-dynamodb#readme",
+  "dependencies": {
+    "aws-sdk": "^2.1396.0"
+  }
+}

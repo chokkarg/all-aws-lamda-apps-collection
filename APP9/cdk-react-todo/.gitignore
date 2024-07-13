@@ -1,0 +1,17 @@
+!jest.config.js
+*.d.ts
+node_modules
+.envrc
+.env
+.vscode
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+
+# lambdas
+packages/lambdas/build/*
+
+# app
+packages/app/build/*
+!packages/app/react-app.d.ts

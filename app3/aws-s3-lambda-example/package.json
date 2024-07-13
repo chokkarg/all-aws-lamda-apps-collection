@@ -1,0 +1,71 @@
+{
+  "name": "aws-s3-lambda-example",
+  "version": "1.0.13",
+  "description": "A sample application showcasing AWS S3, Lamda and Gateway API",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "npm run test:lambda && npm run test:html && npm run test:api:local && npm run test:integration:local",
+    "test:lambda": "jest",
+    "test:html": "mocha-headless-chrome -f test/html/index-spec.html",
+    "test:api:production": "newman run -e test/api/env/production.postman_environment.json test/api/specs/aws-sample.postman_collection.json",
+    "test:api:local": "node test/api/run-api-test.js",
+    "test:integration:production": "rm -f cypress.env.json && cypress run",
+    "test:integration:local": "node test/integration/run-integration-test.js",
+    "test:design:integration": "cypress open",
+    "serve:local": "",
+    "clean": "rm -rf dist",
+    "build:s3": "mkdir -p dist/s3 && cp app/html/* dist/s3",
+    "build:lambda:echo": "mkdir -p dist/lambda && cd app/lambda/echo && zip -X -r ../../../dist/lambda/echo.zip *",
+    "build:lambda:reverse": "mkdir -p dist/lambda && cd app/lambda/reverse && zip -X -r ../../../dist/lambda/reverse.zip *",
+    "build:lambda:uppercase": "mkdir -p dist/lambda && cd app/lambda/uppercase && zip -X -r ../../../dist/lambda/uppercase.zip *",
+    "deploy:s3": "npm run build:s3 && cd dist/s3 && aws s3 cp . s3://${AWS_BUCKET}/ --recursive",
+    "deploy:lambda:echo": "npm run build:lambda:echo && aws lambda update-function-code --function-name echo --zip-file fileb://dist/lambda/echo.zip",
+    "deploy:lambda:reverse": "npm run build:lambda:reverse && aws lambda update-function-code --function-name reverse --zip-file fileb://dist/lambda/reverse.zip",
+    "deploy:lambda:uppercase": "npm run build:lambda:uppercase && aws lambda update-function-code --function-name uppercase --zip-file fileb://dist/lambda/uppercase.zip",
+    "deploy:lambda": "npm run deploy:lambda:echo && npm run deploy:lambda:reverse && npm run deploy:lambda:uppercase",
+    "deploy": "npm run clean && npm test && npm run deploy:s3 && npm run deploy:lambda && npm run test:api:production && npm run test:integration:production"
+  },
+  "author": "John R. Ghidiu",
+  "license": "MIT",
+  "jest": {
+    "collectCoverage": true,
+    "coverageDirectory": "build/reports",
+    "coverageThreshold": {
+      "global": {
+        "branches": 60,
+        "functions": 90,
+        "lines": 80,
+        "statements": 80
+      }
+    },
+    "collectCoverageFrom": [
+      "app/lambda/**/*.js"
+    ],
+    "roots": [
+      "app/lambda",
+      "test/lambda"
+    ],
+    "resetModules": true,
+    "testRegex": ".*/.*-spec.js"
+  },
+  "auto-changelog": {
+    "unreleased": false,
+    "commitLimit": false
+  },
+  "devDependencies": {
+    "auto-changelog": "^1.13.0",
+    "chai": "^4.2.0",
+    "chalk": "^2.4.2",
+    "cypress": "^3.8.3",
+    "express": "^4.17.1",
+    "jest-cli": "^24.7.1",
+    "jquery": "3.5.0",
+    "mocha": "^6.1.4",
+    "mocha-headless-chrome": "^2.0.2",
+    "newman": "^4.4.1",
+    "open": "^6.3.0",
+    "sinon": "^7.3.2"
+  }
+}
